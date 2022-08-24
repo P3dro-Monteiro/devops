@@ -1,0 +1,62 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'org.siouan.frontend-jdk8' version '6.0.0'
+	id 'war'
+}
+
+group = 'com.greglturnquist'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	runtimeOnly 'com.h2database:h2'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	//To support war file for deploying to tomcat
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	//Junit
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+frontend {
+	nodeVersion = "14.17.3"
+	assembleScript = "run build"
+	cleanScript = "run clean"
+	checkScript = "run check"
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+task backupJavaArchive(type: Copy, dependsOn: jar) {
+	from "./build/libs"
+	into "./dist"
+}
+
+task deleteWebPackChild(type: Delete) {
+		delete files("src/main/resources/static/built/")
+}
+
+/*
+B.dependsOn A
+Task B depend on task A => Gradle executes task A everytime before task B
+ */
+
+clean.dependsOn deleteWebPackChild
+
+
+

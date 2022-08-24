@@ -1,0 +1,59 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+                steps {
+                    echo 'Checking out...'
+                    git credentialsId: 'PM_BitBucket_Credentials', url: 'https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git'
+                }
+        }
+
+        stage('Build') {
+                steps {
+                    dir('CA2_Part_1/gradle_basic_demo/') {
+                        echo 'Assembling Project...'
+                        script {
+                            bat 'dir'
+                            bat 'gradle clean assemble'    
+                            bat 'gradle testClasses'
+                        }
+                }
+            }
+        }
+
+         stage('Test') {
+            steps {
+                dir('CA2_Part_1/gradle_basic_demo/') {
+                    echo 'Testing 1...2...3...'
+                    script {
+                        bat 'dir'
+                        bat 'gradle check'
+                        bat 'gradle test'       
+                    }
+                }
+            }
+        }
+
+        stage ('Archiving') {
+            steps {
+                dir('CA2_Part_1/gradle_basic_demo/') {
+                    echo 'Archiving...'
+                    archiveArtifacts 'build/distributions/'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            dir('CA2_Part_1/gradle_basic_demo/') {
+                script {
+                    junit testResults: '**/test-results/**/*.xml'
+                }
+            }
+        }
+    }
+
+}

@@ -1,0 +1,111 @@
+pipeline {
+    agent any
+
+    environment {
+        registry = "pmonteiro1211790/devops-21-22-lmn-1211790"
+        registryCredential = "PMonteiro_DockerHub_Credentials"
+        dockerimage = ""
+        //DOCKER_HUB_CREDENTIALS = credentials("PMonteiro_DockerHub_Credentials")
+    }
+
+    stages {
+        //To checkout the code from the repository 
+        stage('Checkout') {
+                steps {
+                    echo 'Checking out...'
+                    git credentialsId: 'PM_BitBucket_Credentials', url: 'https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git'
+                }
+        }
+        //Compiles and Produces the archive files with the application. 
+        //Do not use the build task of gradle (because it also executes the tests)!
+        stage('Build') {
+                steps {
+                    dir('CA2_Part_2/') {
+                        echo 'Assembling Project...'
+                        script {
+                            bat 'dir'
+                            bat 'gradle clean assemble'    
+                            bat 'gradle testClasses'
+                        }
+                }
+            }
+        }
+        //Executes Unit Tests
+         stage('Test') {
+            steps {
+                dir('CA2_Part_2/') {
+                    echo 'Testing 1...2...3...'
+                    script {
+                        bat 'dir'
+                        bat 'gradle check'
+                        bat 'gradle test'       
+                    }
+                }
+            }
+        }
+        //Generates the javadoc of the project and publish it in Jenkins
+        stage('Publish Javadoc') {
+            steps {
+                dir('CA2_Part_2/') {
+                    echo 'Publishing JavaDocs'
+                    bat 'gradle Javadoc'
+                    script {
+                    publishHTML (target: [
+                        allowMissing: false,
+                        keepAll: true,
+                        reportDir: 'build/docs/javadoc/',
+                        reportName: '1211790_javadocs',
+                        reportFiles: 'index.html',   
+                    ])
+                    }
+                }
+            }
+        }
+        //Generates artifacts of the project and publish it in Jenkins(.war file)
+        stage ('Archiving') {
+            steps {
+                dir('CA2_Part_2/') {
+                    echo 'Archiving...'
+                    archiveArtifacts 'build/libs/'
+                }
+            }
+        }
+        //Builds Container Image
+        stage('Build Image') {
+            steps {
+                    script{
+                        dir('CA2_Part_2/') {
+                        echo 'Building Docker Image...'
+                        dockerImage = docker.build registry + ":${env.BUILD_ID}"
+                    }
+                }                        
+                
+            }
+        }
+        //Publishes Container Image to Docker Hub
+        stage('Publish Image') {
+            steps {
+                    script{
+                        dir('CA2_Part_2/') {
+                        echo 'Publishing Docker Image...'
+                        //bat 'echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin'
+                        docker.withRegistry('', registryCredential) {                        
+                            dockerImage.push()
+                        }
+                    }
+                }                        
+                
+            }
+        }
+    }
+    //Archives Unit Tests Results
+    post {
+        always {
+            dir('CA2_Part_2/') {    
+                script {
+                    junit testResults: '**/test-results/**/*.xml'
+                }
+            }
+        }
+    }
+}

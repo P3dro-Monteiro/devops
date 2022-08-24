@@ -1,0 +1,91 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+
+
+http_archive(
+
+    name = "bazel_springboot_rule",
+
+    sha256 = "94b0227d73c10fe7566e1faf12e101a8ea18b57322debe90d4ff3494e017592f",
+
+    urls = [
+
+        "https://github.com/salesforce/bazel-springboot-rule/releases/download/1.1.1/bazel-springboot-rule-1.1.1.zip",
+
+    ],
+
+)
+
+
+
+RULES_JVM_EXTERNAL_TAG = "4.2"
+
+RULES_JVM_EXTERNAL_SHA = "cd1a77b7b02e8e008439ca76fd34f5b07aecb8c752961f9640dea15e9e5ba1ca"
+
+
+
+http_archive(
+
+    name = "rules_jvm_external",
+
+    strip_prefix = "rules_jvm_external-%s" % RULES_JVM_EXTERNAL_TAG,
+
+    sha256 = RULES_JVM_EXTERNAL_SHA,
+
+    url = "https://github.com/bazelbuild/rules_jvm_external/archive/%s.zip" % RULES_JVM_EXTERNAL_TAG,
+
+)
+
+
+
+load("@rules_jvm_external//:repositories.bzl", "rules_jvm_external_deps")
+
+
+
+rules_jvm_external_deps()
+
+
+
+load("@rules_jvm_external//:setup.bzl", "rules_jvm_external_setup")
+
+
+
+rules_jvm_external_setup()
+
+
+
+load('@rules_jvm_external//:defs.bzl', 'maven_install')
+
+maven_install(
+
+  artifacts = [
+
+    'org.springframework.boot:spring-boot-autoconfigure:2.3.9.RELEASE',
+
+    'org.springframework.boot:spring-boot-starter-web:2.3.9.RELEASE',
+
+    'org.springframework.boot:spring-boot-starter-data-jpa:2.3.1.RELEASE',
+
+    'org.springframework.boot:spring-boot-starter-tomcat:2.3.9.RELEASE',
+
+    'org.springframework.boot:spring-boot-starter-thymeleaf:2.5.6',
+
+    'org.springframework.boot:spring-boot:2.3.9.RELEASE',
+
+    'com.h2database:h2:2.1.212',
+
+    'org.webjars:Rest:2.0.0',
+
+  ],
+
+  repositories = [
+
+    'https://maven.google.com',
+
+    'https://repo1.maven.org/maven2',
+
+  ],
+
+  fetch_sources = True,
+
+)

@@ -1,0 +1,255 @@
+Started by user Pedro Miguel Fernandes Monteiro
+Obtained CA2_Part_1/gradle_basic_demo/Jenkinsfile from git https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in C:\Users\pedro\.jenkins\workspace\CA5_Part1
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+The recommended git tool is: git.exe
+using credential PM_BitBucket_Credentials
+ > git.exe rev-parse --resolve-git-dir C:\Users\pedro\.jenkins\workspace\CA5_Part1\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git # timeout=10
+Fetching upstream changes from https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.34.0.windows.1'
+using GIT_ASKPASS to set credentials PM_BitBucket_Credentials
+ > git.exe fetch --tags --force --progress -- https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+Checking out Revision d94a0b8fdef86f8ca4d4d7865d583a8fb470a78b (refs/remotes/origin/master)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f d94a0b8fdef86f8ca4d4d7865d583a8fb470a78b # timeout=10
+Commit message: "Fixes Windows Path Issues + gradlew issues + build issues addresses #50"
+ > git.exe rev-list --no-walk 43a2a4ca33e9be144066eac7d4559b4cf219fc14 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] echo
+Checking out...
+[Pipeline] git
+The recommended git tool is: git.exe
+using credential PM_BitBucket_Credentials
+ > git.exe rev-parse --resolve-git-dir C:\Users\pedro\.jenkins\workspace\CA5_Part1\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git # timeout=10
+Fetching upstream changes from https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.34.0.windows.1'
+using GIT_ASKPASS to set credentials PM_BitBucket_Credentials
+ > git.exe fetch --tags --force --progress -- https://PMonteiro1211790@bitbucket.org/pmonteiro1211790/devops-21-22-lmn-1211790.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+Checking out Revision d94a0b8fdef86f8ca4d4d7865d583a8fb470a78b (refs/remotes/origin/master)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f d94a0b8fdef86f8ca4d4d7865d583a8fb470a78b # timeout=10
+ > git.exe branch -a -v --no-abbrev # timeout=10
+ > git.exe branch -D master # timeout=10
+ > git.exe checkout -b master d94a0b8fdef86f8ca4d4d7865d583a8fb470a78b # timeout=10
+Commit message: "Fixes Windows Path Issues + gradlew issues + build issues addresses #50"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] dir
+Running in C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo
+[Pipeline] {
+[Pipeline] echo
+Assembling Project...
+[Pipeline] script
+[Pipeline] {
+[Pipeline] bat
+
+C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo>dir
+ Volume in drive C is OS
+ Volume Serial Number is C0E1-E53C
+
+ Directory of C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo
+
+25/05/2022  21:00    <DIR>          .
+25/05/2022  21:00    <DIR>          ..
+25/05/2022  17:04               190 .gitignore
+25/05/2022  19:32    <DIR>          .gradle
+25/05/2022  19:35    <DIR>          build
+25/05/2022  17:04             2ÿ597 build.gradle
+25/05/2022  17:04             2ÿ291 build.gradle.bak
+25/05/2022  17:04    <DIR>          gradle
+25/05/2022  17:04                24 gradle.properties
+25/05/2022  17:04             8ÿ304 gradlew
+25/05/2022  17:04             2ÿ763 gradlew.bat
+25/05/2022  21:00             1ÿ406 Jenkinsfile
+25/05/2022  17:04             1ÿ608 README.md
+25/05/2022  17:04               367 settings.gradle
+25/05/2022  17:04             6ÿ463 sourceCode.zip
+25/05/2022  17:04    <DIR>          src
+25/05/2022  17:04    <DIR>          srcBackup
+              10 File(s)         26ÿ013 bytes
+               7 Dir(s)  19ÿ531ÿ415ÿ552 bytes free
+[Pipeline] bat
+
+C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo>gradle clean assemble 
+
+> Configure project :
+Source Code Back Up Success
+Source Code Has Been Zipped
+
+> Task :clean
+> Task :compileJava
+> Task :processResources
+> Task :classes
+> Task :jar
+> Task :startScripts
+> Task :distTar
+> Task :distZip
+> Task :assemble
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.4.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 14s
+7 actionable tasks: 7 executed
+[Pipeline] bat
+
+C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo>gradle testClasses 
+
+> Configure project :
+Source Code Back Up Success
+Source Code Has Been Zipped
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava
+> Task :processTestResources NO-SOURCE
+> Task :testClasses
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.4.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 4s
+3 actionable tasks: 1 executed, 2 up-to-date
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] dir
+Running in C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo
+[Pipeline] {
+[Pipeline] echo
+Testing 1...2...3...
+[Pipeline] script
+[Pipeline] {
+[Pipeline] bat
+
+C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo>dir
+ Volume in drive C is OS
+ Volume Serial Number is C0E1-E53C
+
+ Directory of C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo
+
+25/05/2022  21:00    <DIR>          .
+25/05/2022  21:00    <DIR>          ..
+25/05/2022  17:04               190 .gitignore
+25/05/2022  19:32    <DIR>          .gradle
+25/05/2022  21:00    <DIR>          build
+25/05/2022  17:04             2ÿ597 build.gradle
+25/05/2022  17:04             2ÿ291 build.gradle.bak
+25/05/2022  17:04    <DIR>          gradle
+25/05/2022  17:04                24 gradle.properties
+25/05/2022  17:04             8ÿ304 gradlew
+25/05/2022  17:04             2ÿ763 gradlew.bat
+25/05/2022  21:00             1ÿ406 Jenkinsfile
+25/05/2022  17:04             1ÿ608 README.md
+25/05/2022  17:04               367 settings.gradle
+25/05/2022  17:04             6ÿ463 sourceCode.zip
+25/05/2022  17:04    <DIR>          src
+25/05/2022  17:04    <DIR>          srcBackup
+              10 File(s)         26ÿ013 bytes
+               7 Dir(s)  19ÿ532ÿ316ÿ672 bytes free
+[Pipeline] bat
+
+C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo>gradle check 
+
+> Configure project :
+Source Code Back Up Success
+Source Code Has Been Zipped
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test
+> Task :check
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.4.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 5s
+4 actionable tasks: 1 executed, 3 up-to-date
+[Pipeline] bat
+
+C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo>gradle test 
+
+> Configure project :
+Source Code Back Up Success
+Source Code Has Been Zipped
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test UP-TO-DATE
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 8.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+See https://docs.gradle.org/7.4.1/userguide/command_line_interface.html#sec:command_line_warnings
+
+BUILD SUCCESSFUL in 3s
+4 actionable tasks: 4 up-to-date
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Archiving)
+[Pipeline] dir
+Running in C:\Users\pedro\.jenkins\workspace\CA5_Part1\CA2_Part_1\gradle_basic_demo
+[Pipeline] {
+[Pipeline] echo
+Archiving...
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // dir
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

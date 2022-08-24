@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+        version: v0.1
+    spec:
+      containers:
+        - name: database
+          image: pmonteiro1211790/devops-21-22-lmn-1211790:ca4_part_2_db
+          ports:
+            - containerPort: 8082
+            - containerPort: 9092
